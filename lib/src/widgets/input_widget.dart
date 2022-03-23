@@ -330,9 +330,11 @@ class _InputWidgetState extends State<InternationalPhoneNumberInput> {
   void onChanged(String value) {
     countries.forEach((element) {
       if (RegExp('\\${element.dialCode}').hasMatch(value)) {
-        setState(() {
-          country = element;
-        });
+        if (country?.dialCode != element.dialCode) {
+          setState(() {
+            country = element;
+          });
+        }
       }
     });
 

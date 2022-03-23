@@ -129,7 +129,7 @@ class PhoneNumber extends Equatable {
     return type;
   }
 
-  static PhoneNumber getInitialIsoCode(String phoneNumber) {
+  static PhoneNumber getInitialIsoCode(String phoneNumber, [String? isoCode]) {
     final countries = CountryProvider.getCountriesData(countries: null);
 
     Country country = countries.firstWhere(
@@ -141,9 +141,11 @@ class PhoneNumber extends Equatable {
 
     final match = phoneRegExp.allMatches(phoneNumber);
 
+    String? alpha2Code = isoCode ?? country.alpha2Code;
+
     return PhoneNumber(
       dialCode: country.dialCode,
-      isoCode: country.alpha2Code,
+      isoCode: alpha2Code,
       phoneNumber: match.first.group(2)?.toString() ?? '',
     );
   }
